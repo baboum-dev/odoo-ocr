@@ -1,6 +1,6 @@
 {
     "name": "Document OCR",
-    "version": "18.0.1.0.0",
+    "version": "19.0.1.0.0",
     "category": "Document Management",
     "summary": "OCR Processing for Documents",
     "sequence": 10,

@@ -109,22 +109,23 @@ class OCRProvider(models.Model):
                     # Get the standard code (value) and then map it to target provider
                     standard_code = mappings[language]
                     # Find the key in target provider mapping that has this standard code as value
-                    for target_code, std_code in self.LANGUAGE_MAPPINGS[target_provider].items():
+                    for target_code, std_code in self.LANGUAGE_MAPPINGS[self.provider_type].items():
                         if std_code == standard_code:
                             return target_code
                             
         return 'eng'  # Default to English if no mapping found
 
-    @api.model
-    def create(self, vals):
-        if vals.get("is_default"):
-            self.search(
-                [
-                    ("is_default", "=", True),
-                    ("company_id", "=", vals.get("company_id", self.env.company.id)),
-                ]
-            ).write({"is_default": False})
-        return super().create(vals)
+    @api.model_create_multi
+    def create(self, vals_list):
+        for vals in vals_list:
+            if vals.get("is_default"):
+                self.search(
+                    [
+                        ("is_default", "=", True),
+                        ("company_id", "=", vals.get("company_id", self.env.company.id)),
+                    ]
+                ).write({"is_default": False})
+        return super().create(vals_list)
 
     def write(self, vals):
         if vals.get("is_default"):

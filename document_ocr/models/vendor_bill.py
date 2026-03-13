@@ -51,7 +51,7 @@ class VendorBill(models.Model):
                     "PREFER_DAY_OF_MONTH": "first",
                     "PREFER_DATES_FROM": "past",
                     "RETURN_AS_TIMEZONE_AWARE": False,
-                    "DATE_ORDER": "DMY",
+                    "DATE_ORDER": "YMD",
                 },
             )
             if parsed_date:
