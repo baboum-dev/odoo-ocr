@@ -1,4 +1,8 @@
-from odoo import models, fields, api
+import logging
+
+from odoo import api, fields, models
+
+_logger = logging.getLogger(__name__)
 
 
 class VendorBill(models.Model):
@@ -40,7 +44,7 @@ class VendorBill(models.Model):
     def _parse_date(self, date_str):
         """Parse date string to YYYY-MM-DD format using dateparser."""
         if not date_str:
-            return False
+            return fields.Date.context_today(self)
 
         try:
             import dateparser

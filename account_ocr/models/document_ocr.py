@@ -1,4 +1,4 @@
-from odoo import _, models
+from odoo import _, fields, models
 from odoo.exceptions import UserError
 
 
@@ -150,8 +150,12 @@ class DocumentOCR(models.Model):
         partner = self._prepare_vendor_partner(parsed_data)
         line_commands = self._prepare_vendor_bill_lines(parsed_data)
 
-
-        parsed_date = self._parse_date(parsed_data.get("date"))
+        parsed_date = (
+            self._parse_date(parsed_data.get("date"))
+            or target_move.invoice_date
+            or target_move.date
+            or fields.Date.context_today(self)
+        )
         target_move.write(
             {
                 "partner_id": partner.id,

@@ -6,8 +6,11 @@
     "sequence": 20,
     "author": "Anang Aji Rahmawan",
     "website": "https://github.com/0yik",
-    "depends": ["account", "document_ocr"],
-    "data": ["views/account_move_views.xml"],
+    "depends": ["account", "document_ocr", "queue_job"],
+    "data": [
+        "data/queue_job_function_data.xml",
+        "views/account_move_views.xml",
+    ],
     "installable": True,
     "application": False,
     "auto_install": False,
